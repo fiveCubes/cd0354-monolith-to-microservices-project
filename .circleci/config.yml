@@ -1,0 +1,54 @@
+version: 2.1
+
+jobs:
+  build-and-push:
+    docker:
+      - image: cimg/node:18.20  # Modern Node with Docker
+    working_directory: ~/app
+    steps:
+      - checkout
+
+      - setup_remote_docker
+
+      - run:
+          name: Print Docker Version
+          command: docker --version
+
+      - run:
+          name: Build Reverse Proxy Image
+          command: docker build -t reverseproxy ./udagram-reverseproxy
+
+      - run:
+          name: Build Backend User Image
+          command: docker build -t udagram-api-user ./udagram-api-user
+
+      - run:
+          name: Build Backend Feed Image
+          command: docker build -t udagram-api-feed ./udagram-api-feed
+
+      - run:
+          name: Build Frontend Image
+          command: docker build -t udagram-frontend:local ./udagram-frontend
+
+      - run:
+          name: Tag Docker Images
+          command: |
+            docker tag reverseproxy $DOCKER_USER/reverseproxy:latest
+            docker tag udagram-api-user $DOCKER_USER/udagram-api-user:latest
+            docker tag udagram-api-feed $DOCKER_USER/udagram-api-feed:latest
+            docker tag udagram-frontend:local $DOCKER_USER/udagram-frontend:latest
+
+      - run:
+          name: Push Docker Images
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push $DOCKER_USER/reverseproxy:latest
+            docker push $DOCKER_USER/udagram-api-user:latest
+            docker push $DOCKER_USER/udagram-api-feed:latest
+            docker push $DOCKER_USER/udagram-frontend:latest
+
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+      - build-and-push
