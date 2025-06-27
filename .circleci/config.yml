@@ -33,19 +33,19 @@ jobs:
       - run:
           name: Tag Docker Images
           command: |
-            docker tag reverseproxy $DOCKER_USER/reverseproxy:latest
-            docker tag udagram-api-user $DOCKER_USER/udagram-api-user:latest
-            docker tag udagram-api-feed $DOCKER_USER/udagram-api-feed:latest
-            docker tag udagram-frontend:local $DOCKER_USER/udagram-frontend:latest
+            docker tag reverseproxy $DOCKER_USER/reverseproxy:v2
+            docker tag udagram-api-user $DOCKER_USER/udagram-api-user:v2
+            docker tag udagram-api-feed $DOCKER_USER/udagram-api-feed:v2
+            docker tag udagram-frontend:local $DOCKER_USER/udagram-frontend:v2
 
       - run:
           name: Push Docker Images
           command: |
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
-            docker push $DOCKER_USER/reverseproxy:latest
-            docker push $DOCKER_USER/udagram-api-user:latest
-            docker push $DOCKER_USER/udagram-api-feed:latest
-            docker push $DOCKER_USER/udagram-frontend:latest
+            docker push $DOCKER_USER/reverseproxy:v2
+            docker push $DOCKER_USER/udagram-api-user:v2
+            docker push $DOCKER_USER/udagram-api-feed:v2
+            docker push $DOCKER_USER/udagram-frontend:v2
 
 workflows:
   version: 2
