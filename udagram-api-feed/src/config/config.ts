@@ -13,17 +13,3 @@ export const config = {
   },
 };
 
-console.log('Config loaded:', {
-  username: config.username,
-  password: config.password,
-  database: config.database,
-  host: config.host,
-  dialect: config.dialect,
-  aws_region: config.aws_region,
-  aws_profile: config.aws_profile,
-  aws_media_bucket: config.aws_media_bucket,
-  url: config.url,
-  jwt: {
-    secret: config.jwt.secret,
-  },
-});

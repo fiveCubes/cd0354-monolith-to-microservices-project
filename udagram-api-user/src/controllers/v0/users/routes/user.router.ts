@@ -12,6 +12,7 @@ router.get('/');
 router.get('/:id', async (req: Request, res: Response) => {
   const {id} = req.params;
   const item = await User.findByPk(id);
+  console.log(new Date().toLocaleString(), `GET /users/${id}`, item);
   res.send(item);
 });
 

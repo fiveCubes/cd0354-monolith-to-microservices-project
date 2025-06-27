@@ -42,3 +42,7 @@ venv/
 !.elasticbeanstalk/*.global.yml
 .angular/cache/
 .angular/cli.json
+
+set_env.ps1
+set_env.sh
+set_env.bat
